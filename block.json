@@ -1,0 +1,40 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "telex/orbit",
+    "version": "0.1.0",
+    "title": "Orbit",
+    "category": "design",
+    "icon": "clock",
+    "description": "Text that defies gravity. Words curve and glide along an invisible circular path, transforming static copy into kinetic art that draws the eye and holds attention.",
+    "example": {
+        "attributes": {
+            "text": "Code is Poetry since 2003",
+            "speed": 15,
+            "gap": 20
+        }
+    },
+    "attributes": {
+        "text": {
+            "type": "string",
+            "default": "Code is Poetry since 2003"
+        },
+        "speed": {
+            "type": "number",
+            "default": 15
+        },
+        "gap": {
+            "type": "number",
+            "default": 20
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["left", "center", "right", "wide", "full"]
+    },
+    "textdomain": "orbit-block-wp",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "viewScript": "file:./view.js"
+}

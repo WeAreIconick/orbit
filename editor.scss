@@ -1,0 +1,16 @@
+.wp-block-telex-orbit {
+	box-shadow: 0 0 0 1px #ddd;
+	border-radius: 50%;
+	background: #fafcfe;
+	border: none;
+	position: relative;
+	min-width: 220px;
+	min-height: 220px;
+	display: block;
+	cursor: pointer;
+	margin: 20px 0;
+}
+
+.wp-block-telex-orbit.is-selected {
+	box-shadow: 0 0 0 2px #007cba;
+}

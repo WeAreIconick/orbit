@@ -1,0 +1,495 @@
+<?xml version="1.0"?><artefact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="artefact.xsd" name="Orbit" slug="orbit" type="code-package">
+  <file name="readme.txt">
+    <description>This file contains the readme information for the block. It is used to provide information about the block, its usage, and any other relevant details.</description>
+    <content><![CDATA[
+=== Orbit ===
+Contributors:      iconick
+Tags:              block, animation, rotating text
+Stable tag:        0.1.0
+License:           GPL-2.0-or-later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+
+Text that defies gravity. Words curve and glide along an invisible circular path, transforming static copy into kinetic art that draws the eye and holds attention.
+
+== Description ==
+
+The Orbit block lets you add creative, animated text to your content, with your sentence moving in a circle like the numbers on a clock. Use it for emphasizing key phrases, showcasing slogans, or adding creativity to your headings. Text can be customized in the Inspector, while the animation plays both in the editor and on your published site.
+
+== Installation ==
+
+1. Upload the plugin files to the `/wp-content/plugins/orbit` directory, or install the plugin through the WordPress plugins screen directly.
+1. Activate the plugin through the 'Plugins' screen in WordPress
+
+== Frequently Asked Questions ==
+
+= Can I choose the sentence that rotates? =
+
+Yes, you can set the sentence from the block settings in the editor's sidebar.
+
+= Is this animated in both the editor and the front end? =
+
+Yes, the animation is fully active and live in both environments.
+
+== Screenshots ==
+
+1. Example of the block in the editor animating your text on a circular path.
+2. The same effect shown on the published site.
+
+== Changelog ==
+
+= 0.1.0 =
+* Release
+
+== Arbitrary section ==
+
+Customize the animation speed or font size by editing the CSS if needed.
+]]></content>
+  </file>
+  <file name="orbit.php">
+    <description>This file contains the block registration code in the form of a single block plugin. Any other plugin related functionality should be added to this file. All block rendering functionality should go to the `render.php` file.</description>
+    <content><![CDATA[<?php
+/**
+ * Plugin Name:       Orbit
+ * Description:       Text that defies gravity. Words curve and glide along an invisible circular path, transforming static copy into kinetic art that draws the eye and holds attention.
+ * Version:           0.1.0
+ * Author:            WordPress Telex
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       orbit-block-wp
+ *
+ * @package Orbit
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+if ( ! function_exists( 'telex_orbit_block_init' ) ) {
+	/**
+	 * Registers the block using the metadata loaded from the `block.json` file.
+	 * Behind the scenes, it registers also all assets so they can be enqueued
+	 * through the block editor in the corresponding context.
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/register_block_type/
+	 */
+	function telex_orbit_block_init() {
+		register_block_type( __DIR__ . '/build/' );
+	}
+}
+add_action( 'init', 'telex_orbit_block_init' );]]></content>
+  </file>
+  <file name="block.json">
+    <description>This file contains metadata about the block including its name, title, category, icon, and other properties. The icon is a WordPress Dashicon name (e.g., "admin-post", "format-aside", "admin-page"). Do not use any icon that's not in the list under any circustamce. These are the only slugs available:
+	
+	menu menu-alt menu-alt2 menu-alt3 admin-site admin-site-alt admin-site-alt2 admin-site-alt3 dashboard admin-post admin-media admin-links admin-page admin-comments admin-appearance admin-plugins plugins-checked admin-users admin-tools admin-settings admin-network admin-home admin-generic admin-collapse filter admin-customizer admin-multisite welcome-write-blog welcome-add-page welcome-view-site welcome-widgets-menus welcome-comments welcome-learn-more format-aside format-image format-gallery format-video format-status format-quote format-chat format-audio camera camera-alt images-alt images-alt2 video-alt video-alt3 media-archive media-audio media-code media-default media-document media-interactive media-spreadsheet media-text media-video playlist-audio playlist-video controls-play controls-pause controls-forward controls-skipforward controls-back controls-skipback controls-repeat controls-volumeon controls-volumeoff image-crop image-rotate image-rotate-left image-rotate-right image-flip-vertical image-flip-horizontal image-filter undo redo database-add database database-export database-import database-remove database-view align-full-width align-pull-left align-pull-right align-wide block-default button cloud-saved cloud-upload columns cover-image ellipsis embed-audio embed-generic embed-photo embed-post embed-video exit heading html info-outline insert insert-after insert-before remove saved shortcode table-col-after table-col-before table-col-delete table-row-after table-row-before table-row-delete editor-bold editor-italic editor-ul editor-ol editor-ol-rtl editor-quote editor-alignleft editor-aligncenter editor-alignright editor-insertmore editor-spellcheck editor-expand editor-contract editor-kitchensink editor-underline editor-justify editor-textcolor editor-paste-word editor-paste-text editor-removeformatting editor-video editor-customchar editor-outdent editor-indent editor-help editor-strikethrough editor-unlink editor-rtl editor-ltr editor-break editor-code editor-paragraph editor-table align-left align-right align-center align-none lock unlock calendar calendar-alt visibility hidden post-status edit trash sticky external arrow-up arrow-down arrow-right arrow-left arrow-up-alt arrow-down-alt arrow-right-alt arrow-left-alt arrow-up-alt2 arrow-down-alt2 arrow-right-alt2 arrow-left-alt2 sort leftright randomize list-view excerpt-view grid-view move share share-alt share-alt2 rss email email-alt email-alt2 networking amazon facebook facebook-alt google instagram linkedin pinterest podio reddit spotify twitch twitter twitter-alt whatsapp xing youtube hammer art migrate performance universal-access universal-access-alt tickets nametag clipboard heart megaphone schedule tide rest-api code-standards buddicons-activity buddicons-bbpress-logo buddicons-buddypress-logo buddicons-community buddicons-forums buddicons-friends buddicons-groups buddicons-pm buddicons-replies buddicons-topics buddicons-tracking wordpress wordpress-alt pressthis update update-alt screenoptions info cart feedback cloud translation tag category archive tagcloud text bell yes yes-alt no no-alt plus plus-alt plus-alt2 minus dismiss marker star-filled star-half star-empty flag warning location location-alt vault shield shield-alt sos search slides text-page analytics chart-pie chart-bar chart-line chart-area groups businessman businesswoman businessperson id id-alt products awards forms testimonial portfolio book book-alt download upload backup clock lightbulb microphone desktop laptop tablet smartphone phone index-card carrot building store album palmtree tickets-alt money money-alt smiley thumbs-up thumbs-down layout paperclip color-picker edit-large edit-page airplane bank beer calculator car coffee drumstick food fullscreen-alt fullscreen-exit-alt games hourglass open-folder pdf pets printer privacy superhero superhero-alt</description>
+    <content><![CDATA[{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "telex/orbit",
+    "version": "0.1.0",
+    "title": "Orbit",
+    "category": "design",
+    "icon": "clock",
+    "description": "Text that defies gravity. Words curve and glide along an invisible circular path, transforming static copy into kinetic art that draws the eye and holds attention.",
+    "example": {
+        "attributes": {
+            "text": "Code is Poetry since 2003",
+            "speed": 15,
+            "gap": 20
+        }
+    },
+    "attributes": {
+        "text": {
+            "type": "string",
+            "default": "Code is Poetry since 2003"
+        },
+        "speed": {
+            "type": "number",
+            "default": 15
+        },
+        "gap": {
+            "type": "number",
+            "default": 20
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["left", "center", "right", "wide", "full"]
+    },
+    "textdomain": "orbit-block-wp",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "viewScript": "file:./view.js"
+}]]></content>
+  </file>
+  <file name="index.js">
+    <description>This file registers the block, specifies the edit and save functions, and loads the block's metadata</description>
+    <content><![CDATA[
+  /**
+ * Registers a new block provided a unique name and an object defining its behavior.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+import { registerBlockType } from '@wordpress/blocks';
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * All files containing `style` keyword are bundled together. The code used
+ * gets applied both to the front of your site and to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+import './style.scss';
+
+/**
+ * Internal dependencies
+ */
+import Edit from './edit';
+import save from './save';
+import metadata from './block.json';
+
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+registerBlockType( metadata.name, {
+	/**
+	 * @see ./edit.js
+	 */
+	edit: Edit,
+
+	/**
+	 * @see ./save.js
+	 */
+	save,
+} );
+	]]></content>
+  </file>
+  <file name="edit.js">
+    <description>This file contains the edit function for the block which is responsible for rendering the block in the editor.</description>
+    <content><![CDATA[import { __ } from '@wordpress/i18n';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, RangeControl, TextControl, Panel } from '@wordpress/components';
+import { Fragment } from '@wordpress/element';
+
+function polarToCartesian(cx, cy, r, angleDeg) {
+	const angleRad = (angleDeg - 90) * Math.PI / 180.0;
+	return {
+		x: cx + r * Math.cos(angleRad),
+		y: cy + r * Math.sin(angleRad)
+	};
+}
+
+function CircularTextStatic({ text, gap }) {
+	const chars = text && text.length ? text.split('') : [];
+	const radius = 100; // px
+	const svgW = 220, svgH = 220;
+	const center = radius + 10; // Move everything right: margin-left
+	const gapDeg = Number.isFinite(gap) ? Math.max(0, Math.min(gap, 180)) : 20;
+	const n = chars.length;
+	const arcDegrees = 360 - gapDeg;
+
+	return (
+		<svg
+			width={ svgW }
+			height={ svgH }
+			className="clockface-text-static-preview"
+			style={{ display: 'block', marginLeft: 0 }}
+		>
+			{chars.map((char, i) => {
+				const charAngle = (arcDegrees / Math.max(1, n - 1)) * i + gapDeg/2;
+				const pos = polarToCartesian(center, center, radius, charAngle);
+				return (
+					<text
+						key={i}
+						x={pos.x}
+						y={pos.y}
+						textAnchor="middle"
+						dominantBaseline="middle"
+						fontSize="1.12rem"
+						fill="currentColor"
+						transform={`rotate(${charAngle},${pos.x},${pos.y})`}
+						style={{ userSelect: 'text', pointerEvents: 'none' }}
+					>{char}</text>
+				);
+			})}
+		</svg>
+	);
+}
+
+function TelexPanel() {
+	return (
+		<PanelBody
+			title={__('Powered by Telex', 'orbit-block-wp')}
+			initialOpen={false}
+		>
+			<p style={{ marginBottom: '0.6em' }}>
+				Telex is basically the J.A.R.V.I.S of WordPress development - an AI that builds blocks so you don't have to.
+			</p>
+			<a
+				href="https://telex.automattic.ai"
+				target="_blank"
+				rel="noopener noreferrer"
+				style={{ display: 'inline-block', color: '#2271b1', textDecoration: 'underline' }}
+			>
+				Learn more about Telex
+			</a>
+		</PanelBody>
+	);
+}
+
+export default function Edit( { attributes, setAttributes } ) {
+	const { text, speed, gap } = attributes;
+
+	const onChangeText = ( value ) => setAttributes( { text: value } );
+	const onChangeSpeed = ( value ) => setAttributes( { speed: value } );
+	const onChangeGap = ( value ) => setAttributes( { gap: value } );
+
+	return (
+		<Fragment>
+			<InspectorControls>
+				<PanelBody
+					title={ __( 'Orbit', 'orbit-block-wp' ) }
+					description={ __( 'Launch your text into smooth, circular motion with Orbit.', 'orbit-block-wp' ) }
+					initialOpen={ true }
+				>
+					<TextControl
+						label={ __('Text to display', 'orbit-block-wp') }
+						value={ text }
+						onChange={ onChangeText }
+						placeholder={ __('Code is Poetry since 2003', 'orbit-block-wp') }
+					/>
+					<RangeControl
+						label={ __( 'Speed (degrees/sec)', 'orbit-block-wp' ) }
+						value={ speed }
+						onChange={ onChangeSpeed }
+						min={ 1 }
+						max={ 60 }
+					/>
+					<RangeControl
+						label={ __( 'Gap (degrees between start and end)', 'orbit-block-wp' ) }
+						value={ gap }
+						onChange={ onChangeGap }
+						min={ 0 }
+						max={ 120 }
+						step={ 1 }
+						help={ __( 'Creates a space at the join of the circle. 0 = closed circle; higher = more visible gap.' ) }
+					/>
+				</PanelBody>
+				<TelexPanel />
+			</InspectorControls>
+
+			<div { ...useBlockProps() } style={{ width: 220, height: 220, minWidth: 220, minHeight: 220, display: 'block', color: '#21509bcf' }}>
+				<CircularTextStatic text={ text || 'Code is Poetry since 2003' } gap={ gap } />
+			</div>
+		</Fragment>
+	);
+}
+]]></content>
+  </file>
+  <file name="save.js">
+    <description>This file contains the save function for the block which is responsible for creating the static result of rendering the block on the client to display the saved result on the front end.</description>
+    <content><![CDATA[import { useBlockProps } from '@wordpress/block-editor';
+
+export default function save( { attributes } ) {
+	const { text, speed, gap } = attributes;
+	return (
+		<div
+			{ ...useBlockProps.save() }
+			style={ {
+				width: 240,
+				height: 240,
+				position: 'relative',
+				margin: '0 auto',
+			} }
+		>
+			<div
+				className="clockface-text-circle"
+				style={ {
+					width: '100%',
+					height: '100%',
+					position: 'relative',
+				} }
+			>
+				<span
+					className="clockface-text-animation"
+					data-rotating-text={ text }
+					data-rotating-speed={ speed }
+					data-rotating-gap={ gap }
+					style={ {
+						display: 'block',
+						width: '100%',
+						height: '100%',
+						position: 'absolute',
+						top: 0,
+						left: 0,
+						transformOrigin: '50% 50%'
+					} }
+				/>
+			</div>
+		</div>
+	);
+}]]></content>
+  </file>
+  <file name="style.scss">
+    <description>This file contains styles for the block in the front end.</description>
+    <content><![CDATA[.wp-block-telex-orbit {
+	max-width: 260px;
+	background: transparent;
+	min-width: 220px;
+	min-height: 220px;
+	display: block;
+	position: relative;
+}
+
+.clockface-text-circle {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.clockface-text-animation {
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 1.1rem;
+	user-select: none;
+	pointer-events: none;
+	z-index: 10;
+}
+
+.clockface-text-animation span {
+	color: currentColor;
+}]]></content>
+  </file>
+  <file name="editor.scss">
+    <description>This file contains styles for the block in the editor.</description>
+    <content><![CDATA[.wp-block-telex-orbit {
+	box-shadow: 0 0 0 1px #ddd;
+	border-radius: 50%;
+	background: #fafcfe;
+	border: none;
+	position: relative;
+	min-width: 220px;
+	min-height: 220px;
+	display: block;
+	cursor: pointer;
+	margin: 20px 0;
+}
+
+.wp-block-telex-orbit.is-selected {
+	box-shadow: 0 0 0 2px #007cba;
+}]]></content>
+  </file>
+  <file name="view.js">
+    <description>This file contains the view function for the block which is responsible for rendering interactive behaviors of the block on the front end. Ideally using the WordPress interactivity API.</description>
+    <content><![CDATA[
+/**
+ * This script is loaded both in the editor and on the front end.
+ * It animates the sentence around a circle by absolutely positioning each character.
+ */
+
+function createCircularText($container, text, radius, startAngleDeg, animAngleDeg, gapDeg) {
+	const characters = text.split('');
+	const n = characters.length;
+	const gap = typeof gapDeg === 'number' ? Math.max(0, Math.min(180, gapDeg)) : 0;
+	const usedArcDeg = 360 - gap;
+
+	while ($container.firstChild) {
+		$container.removeChild($container.firstChild);
+	}
+
+	if (n === 0) return;
+	for (let i = 0; i < n; i++) {
+		const charElem = document.createElement('span');
+		charElem.innerText = characters[i];
+		charElem.style.position = 'absolute';
+		charElem.style.left = '50%';
+		charElem.style.top = '50%';
+		const theta = (usedArcDeg / Math.max(1, n-1)) * i + startAngleDeg + animAngleDeg;
+		charElem.style.transform = `rotate(${theta}deg) translate(${radius}px) rotate(90deg)`;
+		charElem.style.transformOrigin = '0 0';
+		charElem.style.whiteSpace = 'pre';
+		$container.appendChild(charElem);
+	}
+}
+
+function animateRotatingText(root, radius=100, speed=15, gap=20) {
+	let angle = 0;
+	let last = null;
+	const $span = root;
+	const text = $span.getAttribute('data-rotating-text');
+	if (!text) return;
+	const attrSpeed = parseFloat($span.getAttribute('data-rotating-speed'));
+	const SPEED = (isFinite(attrSpeed) && attrSpeed > 0) ? attrSpeed : speed;
+	const attrGap = parseFloat($span.getAttribute('data-rotating-gap'));
+	const GAP = (isFinite(attrGap) && attrGap >= 0) ? attrGap : gap;
+
+	function step(ts) {
+		if (!last) last = ts;
+		const delta = (ts - last)/1000;
+		last = ts;
+		angle = (angle + SPEED * delta) % 360;
+		createCircularText($span, text, radius, 0, angle, GAP);
+		requestAnimationFrame(step);
+	}
+	createCircularText($span, text, radius, 0, 0, GAP);
+	requestAnimationFrame(step);
+}
+
+function mountRotatingTextBlocks() {
+	const blocks = document.querySelectorAll('.clockface-text-animation[data-rotating-text]');
+	for (let i = 0; i < blocks.length; i++) {
+		if (!blocks[i].dataset.initialized) {
+			blocks[i].dataset.initialized = "true";
+			const speed = parseFloat(blocks[i].getAttribute('data-rotating-speed'));
+			const gap = parseFloat(blocks[i].getAttribute('data-rotating-gap'));
+			animateRotatingText(blocks[i], 100, speed, gap);
+		}
+	}
+}
+
+// For front-end and editor both
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', mountRotatingTextBlocks);
+} else {
+	mountRotatingTextBlocks();
+}
+
+// Also observe DOM for dynamically added blocks (for block editor)
+const observer = new window.MutationObserver(() => {
+	mountRotatingTextBlocks();
+});
+observer.observe(document.body, { childList: true, subtree: true });
+]]></content>
+  </file>
+  <file name="render.php">
+    <description>This file contains the render callback function for the block, which is responsible for rendering the block content on the front end. A render function should exist only if the block is dynamic.</description>
+    <content><![CDATA[]]></content>
+  </file>
+  <file name="package.json">
+    <description>The AI assistant should only edit 'user_provided_block_name_slug', 'description' and resolve 'isDynamicVariant' in this file and ALWAYS INCLUDE IT. This file includes the necessary scripts for building, formatting, and linting the block code. Dependencies are managed at the workspace level via pnpm.</description>
+    <content><![CDATA[{
+    "name": "orbit",
+    "version": "0.1.0",
+    "description": "Text that defies gravity. Words curve and glide along an invisible circular path, transforming static copy into kinetic art that draws the eye and holds attention.",
+    "author": "w0 block authoring tool",
+    "license": "GPL-2.0-or-later",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "wp-scripts build --webpack-copy-php",
+        "format": "wp-scripts format",
+        "lint:css": "wp-scripts lint-style",
+        "lint:js": "wp-scripts lint-js",
+        "packages-update": "wp-scripts packages-update",
+        "plugin-zip": "wp-scripts plugin-zip",
+        "start": "wp-scripts start --blocks-manifest"
+    }
+}]]></content>
+  </file>
+</artefact>
